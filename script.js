@@ -195,9 +195,23 @@ function handleFriendChoice(variantIdx) {
 
 async function finishFriendQuiz() {
     let correctCount = 0;
+    
+    // Считаем строго по текущему количеству вопросов в массиве
     for (let i = 0; i < creatorAnswers.length; i++) {
         if (creatorAnswers[i] === friendAnswers[i]) correctCount++;
     }
+    
+    // ПРИНУДИТЕЛЬНОЕ исправление процентов:
+    const percent = Math.round((correctCount / creatorAnswers.length) * 100);
+    
+    const fName = document.getElementById('friend-name-input').value.trim();
+
+    // ... остальной код (сохранение в базу) ...
+
+    document.getElementById('result-title').innerText = `Результат игры`;
+    document.getElementById('result-percent-text').innerText = `Ты знаешь ${creatorNameGlobal} на ${percent}%!`;
+    switchScreen('result-screen');
+}
     
     const percent = Math.round((correctCount / questionsPool.length) * 100);
     const fName = document.getElementById('friend-name-input').value.trim();
