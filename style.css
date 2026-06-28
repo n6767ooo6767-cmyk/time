@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    background: #1a1a1a;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#info {
+    margin-bottom: 20px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Игровое поле */
+#game-container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    background: #262626;
+    border: 4px solid #444;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* Общий стиль для всех игровых объектов */
+.ball {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* Стили для разных типов */
+.red { 
+    background: #ff4757; 
+    box-shadow: 0 0 15px rgba(255, 73, 87, 0.6); 
+}
+
+.green { 
+    background: #2ed573; 
+    box-shadow: 0 0 15px rgba(46, 213, 115, 0.6); 
+}
+
+.blue { 
+    background: #1e90ff; 
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.6); 
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.blue:hover {
+    transform: scale(1.1);
+}
+
+.bomb { 
+    background: #333; 
+    border: 3px dashed #ff9f43; 
+    box-shadow: 0 0 15px rgba(255, 159, 67, 0.4); 
+}
+
+/* Анимация для эффекта взрыва */
+.exploded {
+    animation: blowUp 0.3s forwards;
+}
+
+@keyframes blowUp {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Кнопка сброса */
+#btn-reset {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+#btn-reset:hover { background: #ff6b81; }
+#btn-reset:active { transform: scale(0.95); }
