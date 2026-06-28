@@ -3,21 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravity Remover</title>
-    <!-- Подключаем внешние стили -->
+    <title>WePlay Mini-Games</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Gravity Remover</h1>
-    <div id="info">Кликай на СИНХ 🔷, чтобы убрать их. Красные 🙃 должны улететь, а Зеленые 🙂 — устоять!</div>
-    
-    <!-- Игровое поле, куда JS будет добавлять смайлики -->
-    <div id="game-container"></div>
+    <!-- ГЛАВНОЕ МЕНЮ (В стиле WePlay) -->
+    <div id="main-menu" class="screen">
+        <h1 class="logo">WePlay <span>Mini</span></h1>
+        <p class="subtitle">Выбери игру для компании:</p>
+        
+        <div class="menu-grid">
+            <div class="menu-card spy-card" onclick="switchScreen('game-spy')">
+                <span class="icon">🕵️‍♂️</span>
+                <h3>Кто шпион?</h3>
+                <p>Вычисли скрытого агента по вопросам</p>
+            </div>
+            <div class="menu-card hide-card" onclick="switchScreen('game-hide')">
+                <span class="icon">🙈</span>
+                <h3>Прятки</h3>
+                <p>Найди спрятавшихся смайликов на время</p>
+            </div>
+        </div>
+    </div>
 
-    <button id="btn-reset">Начать заново</button>
+    <!-- ИГРА 1: КТО ШПИОН -->
+    <div id="game-spy" class="screen hidden">
+        <button class="btn-back" onclick="switchScreen('main-menu')">← Меню</button>
+        <h2>🕵️‍♂️ Кто шпион?</h2>
+        
+        <div id="spy-setup">
+            <label>Количество игроков (3-8):</label>
+            <input type="number" id="player-count" value="4" min="3" max="8">
+            <button class="btn-main" onclick="startSpyGame()">Раздать роли</button>
+        </div>
 
-    <!-- Подключаем игровой скрипт -->
+        <div id="spy-gameplay" class="hidden">
+            <p id="player-turn-text">Игрок 1, твоя очередь!</p>
+            <div class="card-container">
+                <div class="card" id="spy-card" onclick="flipCard()">
+                    <div class="card-front">Показать карту</div>
+                    <div class="card-back" id="card-word">Слово</div>
+                </div>
+            </div>
+            <button class="btn-main hidden" id="btn-next-player" onclick="nextPlayer()">Следующий игрок</button>
+        </div>
+    </div>
+
+    <!-- ИГРА 2: ПРЯТКИ -->
+    <div id="game-hide" class="screen hidden">
+        <button class="btn-back" onclick="switchScreen('main-menu')">← Меню</button>
+        <h2>🙈 Прятки</h2>
+        <div class="game-bar">
+            <div>Осталось найти: <span id="hide-count">0</span></div>
+            <div>Время: <span id="hide-timer">30</span>с</div>
+        </div>
+        
+        <!-- Игровая зона, где будут прятаться смайлики -->
+        <div id="hide-field"></div>
+        
+        <button class="btn-main" id="btn-start-hide" onclick="startHideGame()">Начать игру</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
