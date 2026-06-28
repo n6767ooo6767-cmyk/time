@@ -1,185 +1,91 @@
-:root {
-    --bg: #0a061e;
-    --card: #130d35;
-    --neon-cyan: #06b6d4;
-    --neon-pink: #ec4899;
-    --neon-purple: #a855f7;
-    --neon-yellow: #eab308;
-    --text: #f3f4f6;
-}
+/* --- ДОБАВЛЕНИЯ ДЛЯ ГЛАВНОГО МЕНЮ И КИНО-РЕЖИМА --- */
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, sans-serif;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-.app-container {
-    width: 100%;
-    max-width: 450px;
-    background: #0d0926;
-    padding: 25px 20px;
-    box-sizing: border-box;
+.menu-grid {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    gap: 16px;
+    margin-top: 20px;
 }
 
-.screen-view {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.hidden { display: none !important; }
-
-/* --- ЭКРАН ПРИВЕТСТВИЯ --- */
-.hero-zone {
-    text-align: center;
-    margin: 40px 0 20px;
-}
-.pulse-circle {
-    font-size: 55px;
-    margin-bottom: 10px;
-    animation: pulse 2s infinite ease-in-out;
-}
-@keyframes pulse {
-    0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--neon-cyan)); }
-    50% { transform: scale(1.08); filter: drop-shadow(0 0 20px var(--neon-cyan)); }
-    100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--neon-cyan)); }
-}
-.hero-zone h1 { font-size: 38px; margin: 10px 0 5px; font-weight: 900; letter-spacing: 1px; }
-.hero-zone h1 span { color: var(--neon-pink); text-shadow: 0 0 10px rgba(236, 72, 145, 0.5); }
-.hero-zone p { color: #9ca3af; font-size: 14px; padding: 0 10px; line-height: 1.4; }
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-input[type="text"] {
+.menu-card {
     background: var(--card);
     border: 2px solid #251b54;
-    padding: 16px;
-    border-radius: 16px;
-    color: white;
-    font-size: 16px;
-    text-align: center;
-    outline: none;
-    transition: all 0.2s ease;
-}
-input[type="text"]:focus { 
-    border-color: var(--neon-cyan); 
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-}
-
-.button-row { 
-    display: flex; 
-    gap: 12px; 
-    width: 100%;
-}
-
-/* --- КНОПКИ --- */
-.neon-btn {
-    flex: 1;
-    padding: 16px;
-    font-size: 15px;
-    font-weight: bold;
-    color: white;
-    background: transparent;
-    border: 2px solid var(--neon-cyan);
-    border-radius: 16px;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
-    transition: all 0.1s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.neon-btn:active { transform: translateY(2px); filter: brightness(0.9); }
-.neon-btn.purple { 
-    border-color: var(--neon-purple); 
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent);
-}
-.neon-btn.yellow { 
-    border-color: var(--neon-yellow); 
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
-    color: #fff;
-    background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), transparent);
-}
-
-/* --- ИГРОВОЙ ЭКРАН --- */
-.top-nav { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 10px;
-}
-.badge { background: var(--card); padding: 8px 14px; border-radius: 20px; font-size: 12px; color: #cbd5e1; border: 1px solid #251b54; }
-.status-indicator { font-size: 13px; font-weight: bold; color: var(--neon-yellow); text-shadow: 0 0 5px rgba(234, 179, 8, 0.4); }
-
-.target-display {
-    text-align: center;
-    margin: 20px 0;
-    background: radial-gradient(circle at center, #181042 0%, var(--card) 100%);
-    padding: 25px;
-    border-radius: 24px;
-    border: 1px solid #251b54;
-}
-.target-display p { margin: 0; font-size: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; }
-#target-time { font-size: 64px; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--neon-cyan); margin: 5px 0; font-family: monospace; }
-.target-display span { font-size: 13px; color: #9ca3af; }
-
-/* ЦЕНТРАЛЬНЫЙ ТАЧ-ПАД */
-.pad-area { margin: 15px 0 25px; }
-#action-pad {
-    width: 100%;
-    height: 150px;
-    background: radial-gradient(circle, #2a155c 0%, #11082c 100%);
-    border: 3px solid var(--neon-pink);
-    border-radius: 24px;
-    color: white;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    cursor: pointer;
-    box-shadow: 0 0 25px rgba(236, 72, 153, 0.25);
-    transition: all 0.1s ease;
-    user-select: none;
-    -webkit-user-select: none;
-}
-#action-pad:active {
-    background: var(--neon-pink);
-    color: #05021a;
-    box-shadow: 0 0 45px var(--neon-pink);
-    transform: scale(0.97);
-}
-
-/* ЛИДЕРБОРД */
-.results-layout { text-align: left; flex-grow: 1; }
-.results-layout h3 { font-size: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 0; }
-.players-list { display: flex; flex-direction: column; gap: 10px; }
-
-.player-row {
+    border-radius: 20px;
+    padding: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: var(--card);
-    padding: 14px 16px;
-    border-radius: 16px;
-    border: 1px solid #251b54;
-    transition: border-color 0.2s ease;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
 }
-.player-row.done { border-color: rgba(6, 182, 212, 0.4); background: #141140; }
-.player-info { display: flex; align-items: center; gap: 10px; font-size: 15px; }
-.status-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 6px #ef4444; }
-.player-row.done .status-dot { background: #10b981; box-shadow: 0 0 10px #10b981; }
-.score-badge { font-family: monospace; font-size: 16px; font-weight: bold; color: var(--neon-yellow); }
+.menu-card:active { transform: scale(0.98); }
+.menu-card.cyan-border:hover, .menu-card.cyan-border:active { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
+.menu-card.pink-border:hover, .menu-card.pink-border:active { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(236, 72, 153, 0.2); }
+
+.card-icon { font-size: 36px; }
+.card-text h3 { margin: 0 0 4px 0; font-size: 18px; color: #fff; }
+.card-text p { margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.3; }
+
+.btn-back {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    font-size: 14px;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 5px 0;
+}
+.btn-back:hover { color: #fff; }
+
+.neon-btn.pink {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent);
+}
+
+/* ЭКРАН КИНОКАДРА */
+.frame-viewer {
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid #251b54;
+    margin-bottom: 15px;
+    background: #000;
+}
+#cinema-shot { width: 100%; height: 100%; object-fit: cover; }
+
+/* Динамический слой размытия */
+.blur-cover {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    transition: backdrop-filter 1s linear, -webkit-backdrop-filter 1s linear;
+    pointer-events: none;
+}
+
+.instruction { font-size: 14px; color: #9ca3af; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+
+.variants-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.btn-variant {
+    background: var(--card);
+    border: 2px solid #251b54;
+    padding: 14px 10px;
+    border-radius: 14px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+.btn-variant:active { transform: scale(0.96); }
+.btn-variant.correct { background: #10b981 !important; border-color: #10b981 !important; color: #fff; }
+.btn-variant.wrong { background: #ef4444 !important; border-color: #ef4444 !important; color: #fff; }
