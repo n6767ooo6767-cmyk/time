@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArcadeBox — Игры для компании</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
@@ -19,7 +19,6 @@
             </div>
 
             <div class="menu-grid">
-                <!-- Карточка Игры №3 -->
                 <div class="menu-card cyan-border" onclick="switchScreen('auth-time')">
                     <span class="card-icon">⏱️</span>
                     <div class="card-text">
@@ -28,12 +27,11 @@
                     </div>
                 </div>
 
-                <!-- Карточка Игры №1 -->
                 <div class="menu-card pink-border" onclick="switchScreen('auth-frame')">
-                    <span class="card-icon">🎬</span>
+                    <span class="card-icon">🎭</span>
                     <div class="card-text">
-                        <h3>Кадр за кадром</h3>
-                        <p>Угадай фильм или аниме по размытому кадру.</p>
+                        <h3>Загадай & Угадай</h3>
+                        <p>Один тайно выбирает фильм из 4, остальные угадывают!</p>
                     </div>
                 </div>
             </div>
@@ -44,12 +42,12 @@
             <button class="btn-back" onclick="switchScreen('main-menu')">← Меню</button>
             <div class="hero-zone">
                 <h2>Тайм-<span>Баттл</span></h2>
-                <p>Настройка локальной сессии</p>
+                <p>Вход в группу</p>
             </div>
             <div class="login-form">
-                <input type="text" id="time-room-input" placeholder="Название компании (например: Бро)">
+                <input type="text" id="time-room-input" placeholder="Код группы (например: 777)">
                 <input type="text" id="time-name-input" placeholder="Твоё имя">
-                <button class="neon-btn purple" onclick="startTimeGame()">Начать баттл 🎮</button>
+                <button class="neon-btn purple" onclick="startTimeGame()">Войти в группу 🎮</button>
             </div>
         </div>
 
@@ -57,7 +55,7 @@
         <div id="game-time" class="screen-view hidden">
             <div class="top-nav">
                 <span class="badge">Группа: <b id="time-room-id">---</b></span>
-                <span id="time-status" class="status-indicator">Ожидание...</span>
+                <span id="time-status" class="status-indicator">Зажимай кнопку!</span>
             </div>
             <div class="target-display">
                 <p>Цель раунда:</p>
@@ -74,57 +72,63 @@
                 </button>
             </div>
             <div class="results-layout">
-                <h3>Участники:</h3>
+                <h3>Участники группы:</h3>
                 <div id="time-leaderboard" class="players-list"></div>
             </div>
             <div class="button-row" style="margin-top: 15px;">
-                <button class="neon-btn" onclick="backToAuth('auth-time')">➕ Игрок</button>
-                <button id="time-next-btn" class="neon-btn yellow hidden" onclick="nextTimeRound()">Раунд 🚀</button>
+                <button class="neon-btn" onclick="backToAuth('auth-time')">➕ Сменить игрока</button>
+                <button id="time-next-btn" class="neon-btn yellow hidden" onclick="nextTimeRound()">Новый раунд 🚀</button>
             </div>
         </div>
 
-        <!-- ================= ЭКРАН 4: АВТОРИЗАЦИЯ КАДР ЗА КАДРОМ ================= -->
+        <!-- ================= ЭКРАН 4: АВТОРИЗАЦИЯ ЗАГАДАЙ & УГАДАЙ ================= -->
         <div id="auth-frame" class="screen-view hidden">
             <button class="btn-back" onclick="switchScreen('main-menu')">← Меню</button>
             <div class="hero-zone">
-                <h2>Кадр за <span>кадром</span></h2>
-                <p>Угадай аниме или фильм по деталям</p>
+                <h2>Загадай & <span>Угадай</span></h2>
+                <p>Вход в группу киноманов</p>
             </div>
             <div class="login-form">
-                <input type="text" id="frame-room-input" placeholder="Название компании">
+                <input type="text" id="frame-room-input" placeholder="Код группы (например: 999)">
                 <input type="text" id="frame-name-input" placeholder="Твоё имя">
-                <button class="neon-btn pink" onclick="startFrameGame()">Смотреть кадр 🎬</button>
+                <button class="neon-btn pink" onclick="startFrameGame()">Войти в группу 🎬</button>
             </div>
         </div>
 
-        <!-- ================= ЭКРАН 5: ИГРА КАДР ЗА КАДРОМ ================= -->
+        <!-- ================= ЭКРАН 5: ИГРА (ХОД ВЕДУЩЕГО И УГАДЫВАЮЩИХ) ================= -->
         <div id="game-frame" class="screen-view hidden">
             <div class="top-nav">
-                <span class="badge">Раунд: <b id="frame-round-num">1/5</b></span>
-                <span id="frame-timer" class="status-indicator" style="color: var(--neon-pink)">Таймер: 20с</span>
+                <span class="badge">Группа: <b id="frame-room-id">---</b></span>
+                <span id="frame-role-status" class="status-indicator" style="color: var(--neon-pink)">Выбор ведущего</span>
             </div>
             
-            <!-- Кинематографичный блок с размытием -->
-            <div class="frame-viewer">
-                <img id="cinema-shot" src="" alt="Кадр">
-                <div class="blur-cover" id="blur-layer"></div>
-            </div>
-
-            <div class="quiz-zone">
-                <p class="instruction">Что это за фильм / аниме?</p>
-                <div class="variants-grid" id="variants-container">
-                    <!-- Сюда JS вставит 4 кнопки вариантов ответа -->
+            <!-- Инструкция для тех, кто передает телефон -->
+            <div class="target-display" id="frame-instruction-box">
+                <p id="frame-instruction-title">ВЕДУЩИЙ: <span id="current-host-name">---</span></p>
+                <div id="frame-main-instruction" style="font-size: 18px; font-weight: bold; margin-top: 10px;">
+                    Возьми телефон и тайно выбери один фильм!
                 </div>
             </div>
 
+            <!-- Зона выбора/угадывания -->
+            <div class="quiz-zone">
+                <p class="instruction" id="variants-title">Доступные варианты:</p>
+                <div class="variants-grid" id="variants-container">
+                    <!-- Кнопки генерируются динамически -->
+                </div>
+            </div>
+
+            <!-- Кнопка перехода к угадыванию (показывается ведущему после выбора) -->
+            <button id="frame-submit-choice-btn" class="neon-btn purple hidden" onclick="startGuessingPhase()">Я выбрал, передаю телефон! 📱</button>
+
             <div class="results-layout" style="margin-top: 15px;">
-                <h3>Счёт киноманов:</h3>
+                <h3>Рейтинг киноманов группы:</h3>
                 <div id="frame-leaderboard" class="players-list"></div>
             </div>
 
             <div class="button-row" style="margin-top: 15px;">
-                <button class="neon-btn" onclick="backToAuth('auth-frame')">➕ Игрок</button>
-                <button id="frame-next-btn" class="neon-btn yellow hidden" onclick="nextFrameRound()">Далее 🚀</button>
+                <button class="neon-btn" onclick="backToAuth('auth-frame')">➕ Добавить игрока</button>
+                <button id="frame-next-btn" class="neon-btn yellow hidden" onclick="nextFrameRound()">Следующий ведущий 🚀</button>
             </div>
         </div>
 
